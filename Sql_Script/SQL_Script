@@ -1,1 +1,17 @@
+CREATE DATABASE ecommerce_db;
+GO
 
+USE ecommerce_db;
+GO
+
+CREATE VIEW vw_fact_sales
+AS
+SELECT *
+FROM OPENROWSET(
+BULK 'https://synapseeccomstorage.dfs.core.windows.net/ecommerce/gold/fact_sales/**',
+FORMAT='PARQUET'
+) AS rows;
+
+
+SELECT TOP 20 *
+FROM vw_fact_sales
